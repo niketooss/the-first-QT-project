@@ -3,9 +3,12 @@ import io
 
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication
+from PyQt6.QtWidgets import QMainWindow
+from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QWidget
 from PyQt6.QtWidgets import QLineEdit
 from PyQt6.QtWidgets import QLabel
+
 
 template = '''<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
@@ -112,6 +115,19 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
      <string>Войти</string>
     </property>
    </widget>
+   <widget class="QLabel" name="pic">
+    <property name="geometry">
+     <rect>
+      <x>94</x>
+      <y>25</y>
+      <width>501</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -119,7 +135,7 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
      <x>0</x>
      <y>0</y>
      <width>650</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -131,30 +147,24 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
 '''
 
 
-class Main(QWidget):
+class Main(QMainWindow):
     def __init__(self):
         '''инициализация'''
         super().__init__()
         f = io.StringIO(template)
         uic.loadUi(f, self)
-        self.initUI()
 
-        self.pushButton.clicked.connect(self.pushButton)
-        self.pushButton_2.clicked.connect(self.pushButton_2)
-        self.NameEnter = QLineEdit(self)
-        self.LoginEnter = QLineEdit(self)
-        self.PasswordEnter = QLineEdit(self)
+        self.pushButton.clicked.connect(self.run)
+        self.pushButton_2.clicked.connect(self.run)
+        self.pixmap = QPixmap('kartinka.jpg')
+        self.pic.setPixmap(self.pixmap)
 
 
-        self.pushButton.clicked.connect(self.update_result)
-        self.tableWidget.itemChanged.connect(self.item_changed)
-        self.saveButton.clicked.connect(self.save_results)
-        self.modified = {}
-        self.titles = None
 
-    def initUI(self):
-        '''Настройка интерфейса'''
-        self.setWindowTitle('Редактор текстовых файлов')
+    def run(self):
+        print('k')
+
+
 
     def except_hook(cls, exception, traceback):
         sys.excepthook(cls, exception, traceback)
