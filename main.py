@@ -166,6 +166,7 @@ class Main(QMainWindow):
 
 
 
+
     def except_hook(cls, exception, traceback):
         sys.excepthook(cls, exception, traceback)
 
