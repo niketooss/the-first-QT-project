@@ -9,7 +9,6 @@ from PyQt6.QtWidgets import QWidget
 from PyQt6.QtWidgets import QLineEdit
 from PyQt6.QtWidgets import QLabel
 
-
 template = '''<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
@@ -159,13 +158,13 @@ class Main(QMainWindow):
         self.pixmap = QPixmap('kartinka.jpg')
         self.pic.setPixmap(self.pixmap)
 
-
-
     def run(self):
         print('k')
+        print('k')
+        print('k')
+        print('k')
 
-
-
+        print('k')
 
     def except_hook(cls, exception, traceback):
         sys.excepthook(cls, exception, traceback)
