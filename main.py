@@ -2,12 +2,8 @@ import sys
 import io
 
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtWidgets import QMainWindow
-from PyQt6.QtGui import QPixmap
-from PyQt6.QtWidgets import QWidget
-from PyQt6.QtWidgets import QLineEdit
-from PyQt6.QtWidgets import QLabel
+from PyQt6.QtWidgets import QApplication, QMessageBox, QMainWindow
+from PyQt6.QtGui import QPixmap, QIcon
 
 template = '''<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
@@ -28,9 +24,9 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>372</x>
-      <y>385</y>
-      <width>101</width>
+      <x>376</x>
+      <y>430</y>
+      <width>111</width>
       <height>16</height>
      </rect>
     </property>
@@ -41,8 +37,8 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>120</y>
+      <x>144</x>
+      <y>165</y>
       <width>331</width>
       <height>101</height>
      </rect>
@@ -88,11 +84,11 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="regButton">
     <property name="geometry">
      <rect>
-      <x>232</x>
-      <y>235</y>
+      <x>236</x>
+      <y>280</y>
       <width>151</width>
       <height>23</height>
      </rect>
@@ -101,11 +97,11 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
      <string>Зарегистрироваться</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="loginButton">
     <property name="geometry">
      <rect>
-      <x>376</x>
-      <y>415</y>
+      <x>380</x>
+      <y>460</y>
       <width>91</width>
       <height>23</height>
      </rect>
@@ -117,14 +113,27 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
    <widget class="QLabel" name="pic">
     <property name="geometry">
      <rect>
-      <x>94</x>
-      <y>25</y>
-      <width>501</width>
-      <height>81</height>
+      <x>210</x>
+      <y>10</y>
+      <width>401</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="text">
      <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="feedbackButton">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>10</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Отзыв</string>
     </property>
    </widget>
   </widget>
@@ -134,7 +143,7 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
      <x>0</x>
      <y>0</y>
      <width>650</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -146,25 +155,43 @@ template = '''<?xml version="1.0" encoding="UTF-8"?>
 '''
 
 
-class Main(QMainWindow):
+class Registr(QMainWindow):
+    '''В этом окне происходит регистрация'''
+
     def __init__(self):
         '''инициализация'''
         super().__init__()
         f = io.StringIO(template)
         uic.loadUi(f, self)
 
-        self.pushButton.clicked.connect(self.run)
-        self.pushButton_2.clicked.connect(self.run)
-        self.pixmap = QPixmap('kartinka.jpg')
+        self.setWindowTitle('RTF - Redactor Text Files')
+        self.setWindowIcon(QIcon("logotip.png"))
+        self.pixmap = QPixmap('logotip.png')
+
+        self.regButton.clicked.connect(self.reg_save)
+        self.loginButton.clicked.connect(self.button_clicked)
+        self.feedbackButton.clicked.connect(self.button_clicked)
         self.pic.setPixmap(self.pixmap)
 
-    def run(self):
-        print('k')
-        print('k')
-        print('k')
-        print('k')
+    def reg_save(self):
+        '''сохранение данных регистрации'''
+        self.NameUser = (self.NameLineEdit_3.text())
+        self.LoginUser = (self.LoginLineEdit_3.text())
+        self.PasswordUser = (self.PasswordLineEdit_3.text())
 
-        print('k')
+        print(self.NameUser, self.LoginUser, self.PasswordUser, sep='\n')
+
+    def button_clicked(self, s):
+        '''отзыв о моем проекте('''
+        print("click", s)
+        dlg = QMessageBox(self)
+        self.setWindowTitle('RTF - Redactor Text Files')
+        dlg = QMessageBox(text=f"Вам понравилось RTF?", parent=self)
+        dlg.setWindowTitle("Отзыв")
+        dlg.setStandardButtons(QMessageBox.StandardButton.Yes |
+                               QMessageBox.StandardButton.No)
+
+        dlg.exec()
 
     def except_hook(cls, exception, traceback):
         sys.excepthook(cls, exception, traceback)
@@ -172,6 +199,6 @@ class Main(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = Main()
+    ex = Registr()
     ex.show()
     sys.exit(app.exec())
