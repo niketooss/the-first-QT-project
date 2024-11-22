@@ -2,7 +2,7 @@ import sys
 import io
 
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMessageBox, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMessageBox, QMainWindow, QAbstractButton
 from PyQt6.QtGui import QPixmap, QIcon
 
 
@@ -140,8 +140,29 @@ class Main(QMainWindow):
         self.setWindowTitle('RTF - Redactor Text Files')
         self.setWindowIcon(QIcon("logotip.png"))
         self.pixmap = QPixmap('logotip.png')
-        
-        
+
+        self.openButton_2.clicked.connect(self.exit)
+        self.reverseButton.clicked.connect(self.exit)
+        self.exitButton.clicked.connect(self.exit)
+
+
+    def exit(self, s):
+        '''Выход'''
+        print("click", s)
+        dlg = QMessageBox(self)
+
+
+        self.setWindowTitle('RTF - Redactor Text Files')
+        dlg = QMessageBox(text=f"Вы действительно хотите выйти?", parent=self)
+        dlg.setWindowTitle("Выход")
+        dlg.setStandardButtons(QMessageBox.StandardButton.No |
+                               QMessageBox.StandardButton.Yes)
+
+        if dlg == QMessageBox.StandardButton.Yes:
+            print("OK!")
+        dlg.exec()
+
+
 
 
 if __name__ == '__main__':
